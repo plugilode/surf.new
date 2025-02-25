@@ -13,6 +13,55 @@ const nextConfig = {
       },
     ],
   },
+  webpack: (config) => {
+    // Find the rule that handles CSS files
+    const cssRule = config.module.rules.find(
+      rule => rule.test && rule.test.toString().includes('css')
+    );
+    
+    if (cssRule) {
+      // Replace it with our custom rule
+      cssRule.use = [
+        'style-loader',
+        'css-loader',
+        {
+          loader: 'postcss-loader',
+          options: {
+            postcssOptions: {
+              plugins: [
+                'tailwindcss',
+                'postcss-nested',
+                'autoprefixer',
+              ],
+            },
+          },
+        },
+      ];
+    } else {
+      // If we can't find the CSS rule, add our own
+      config.module.rules.push({
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                plugins: [
+                  'tailwindcss',
+                  'postcss-nested',
+                  'autoprefixer',
+                ],
+              },
+            },
+          },
+        ],
+      });
+    }
+    
+    return config;
+  },
   rewrites: async () => {
     return [
       {
