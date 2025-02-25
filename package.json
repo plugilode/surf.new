@@ -3,11 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "fastapi-dev": "uv run python -m uvicorn api.index:app --reload",
+    "fastapi-dev": "cd backend && uvicorn main:app --reload --port ${PORT:-8000}",
     "next-dev": "next dev -p 3001",
-    "dev": "concurrently \"npm run next-dev\" \"npm run fastapi-dev\"",
+    "dev": "next dev -p ${PORT:-3001}",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p ${PORT:-10000}",
     "lint": "next lint"
   },
   "dependencies": {
