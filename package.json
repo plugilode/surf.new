@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "prebuild": "node preprocess-css.js",
     "fastapi-dev": "cd backend && uvicorn main:app --reload --port ${PORT:-8000}",
     "next-dev": "next dev -p 3001",
     "dev": "next dev -p ${PORT:-3001}",
